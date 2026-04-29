@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import users, purchases, channels, webhooks
+from routers import users, purchases, channels, webhooks, notify
 from core.database import init_db
 
 app = FastAPI(
     title="Messaging Router API",
     description="Purchase events → CRM → LINE / Telegram / WhatsApp routing",
-    version="1.0.0",
+    version="1.1.0",
 )
 
 app.add_middleware(
@@ -20,6 +20,7 @@ app.include_router(users.router,     prefix="/users",     tags=["Users"])
 app.include_router(purchases.router, prefix="/purchases", tags=["Purchases"])
 app.include_router(channels.router,  prefix="/channels",  tags=["Channels"])
 app.include_router(webhooks.router,  prefix="/webhooks",  tags=["Webhooks"])
+app.include_router(notify.router,    prefix="/notify",    tags=["Notify"])
 
 @app.on_event("startup")
 async def startup():

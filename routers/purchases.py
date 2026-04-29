@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.database import get_db
+from core.security import require_api_key
 from models.schemas import PurchaseEvent, PurchaseRead
 from models.purchase import Purchase
 from services import user_service, odoo
@@ -12,7 +13,8 @@ logger = logging.getLogger(__name__)
 
 POINTS_PER_UNIT = 1  # 1 point per 1 currency unit
 
-@router.post("/", response_model=PurchaseRead, status_code=201)
+@router.post("/", response_model=PurchaseRead, status_code=201,
+             dependencies=[Depends(require_api_key)])
 async def handle_purchase(event: PurchaseEvent, db: AsyncSession = Depends(get_db)):
     """
     Main POS → API flow:
