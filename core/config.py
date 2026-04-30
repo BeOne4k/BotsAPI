@@ -12,22 +12,21 @@ class Settings(BaseSettings):
     LINE_CHANNEL_ACCESS_TOKEN: str = ""
     LINE_CHANNEL_SECRET: str = ""
 
-    # WhatsApp (Meta Business API)
+    # WhatsApp
     WHATSAPP_ACCESS_TOKEN: str = ""
     WHATSAPP_PHONE_NUMBER_ID: str = ""
     WHATSAPP_VERIFY_TOKEN: str = "my_verify_token"
 
     # Odoo CRM
     ODOO_URL: str = "http://localhost:8069"
-    ODOO_DB: str = "odoo"
-    ODOO_USERNAME: str = "admin"
-    ODOO_PASSWORD: str = "admin"
+    ODOO_API_TOKEN: str = ""
 
     # API security
     API_SECRET_KEY: str = "change-me-in-production"
 
     class Config:
         env_file = ".env"
+        extra = "ignore"
 
 @lru_cache
 def get_settings() -> Settings:

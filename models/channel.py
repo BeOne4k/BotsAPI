@@ -14,7 +14,7 @@ class Channel(Base):
     id          = Column(Integer, primary_key=True, index=True)
     user_id     = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     type        = Column(Enum(ChannelType), nullable=False)
-    external_id = Column(String, nullable=False)   # line userId / tg chat_id / phone
+    external_id = Column(String(100), nullable=False)   # line userId / tg chat_id / phone
     created_at  = Column(DateTime(timezone=True), server_default=func.now())
 
-    user = relationship("User", backref="channels")
+    user = relationship("User", back_populates="channels")
